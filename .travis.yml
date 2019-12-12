@@ -11,13 +11,14 @@ jobs:
         - bash <(curl -s https://codecov.io/bash) -cF node_js
     - language: go
       go: 1.12.x
+      if: branch = master
       script:
         - cd go
         - export GO111MODULE=on
         - go mod tidy
         - go test -race -coverprofile=coverage.txt -covermode=atomic ./service/... ./utils...
       after_success:
-        - bash <(curl -s https://codecov.io/bash)
+        - bash <(curl -s https://codecov.io/bash) -cF go
     - language: java
       jdk: openjdk8
       if: branch = master

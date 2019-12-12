@@ -2,7 +2,7 @@ English | [简体中文](README-CN.md)
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud ApiGateway Core SDK
+## Alibaba Cloud APIGateway Core SDK
 
 [![Travis Build Status](https://travis-ci.org/aliyun/alibabacloud-apigateway-core-sdk.svg?branch=master)](https://travis-ci.org/aliyun/alibabacloud-apigateway-core-sdk)
 
