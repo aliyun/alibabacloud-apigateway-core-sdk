@@ -4,13 +4,13 @@
     <RootNamespace>AlibabaCloud.Apigateway</RootNamespace>
     <Version>0.0.1</Version>
     <Authors>Alibaba Cloud</Authors>
-    <PackageTags>Alibaba Aliyun Apigateway BaseClient SDK</PackageTags>
+    <PackageTags>Alibaba Aliyun Apigateway Core SDK</PackageTags>
     <Copyright>©2009-2019 Alibaba Cloud</Copyright>
     <PackageProjectUrl>https://github.com/aliyun/</PackageProjectUrl>
     <PackageIconUrl>https://www.alibabacloud.com/favicon.ico</PackageIconUrl>
-    <Description>Alibaba Cloud Apigateway BaseClient SDK for .NET</Description>
+    <Description>Alibaba Cloud Apigateway Core SDK for .NET</Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyName>AlibabaCloud.Apigateway.BaseClient</AssemblyName>
+    <AssemblyName>AlibabaCloud.APIGateway.Core</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
