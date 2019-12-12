@@ -8,25 +8,10 @@ English | [简体中文](README-CN.md)
 
 ## Installation
 
-### Java
-
-- [baseclient](./baseclient/java/README.md)
-- [sdk](./sdk/java/README.md)
-
-### Go
-
-- [baseclient](./baseclient/go/README.md)
-- [sdk](./sdk/go/README.md)
-
-### .Net
-
-- [baseclient](./baseclient/csharp/README.md)
-- [sdk](./sdk/cs/README.md)
-
-### TypeScript/Node.js
-
-- [baseclient](./baseclient/ts/README.md)
-- [sdk](./sdk/ts/README.md)
+- [Java](./java/README.md)
+- [Go](./go/README.md)
+- [.Net](./cs/README.md)
+- [TypeScript/Node.js](./ts/README.md)
 
 ## Issues
 
