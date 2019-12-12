@@ -8,10 +8,10 @@ English | [简体中文](README-CN.md)
 
 ## 安装
 
-- [Java](./java/README.md)
-- [Go](./go/README.md)
-- [.Net](./cs/README.md)
-- [TypeScript/Node.js](./ts/README.md)
+- [Java](./java/README-CN.md)
+- [Go](./go/README-CN.md)
+- [.Net](./cs/README-CN.md)
+- [TypeScript/Node.js](./ts/README-CN.md)
 
 ## 问题
 
