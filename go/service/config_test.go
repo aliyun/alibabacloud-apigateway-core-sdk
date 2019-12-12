@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"gitlab.alibaba-inc.com/alicloud-sdk/apigateway-core-sdk/go/utils"
+	"github.com/aliyun/alibabacloud-apigateway-core-sdk/go/utils"
 )
 
 type PrettifyTest struct {
