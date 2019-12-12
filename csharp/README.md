@@ -1,17 +1,17 @@
 English | [简体中文](README-CN.md)
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud Apigateway BaseClient for .Net
+## Alibaba Cloud Apigateway Core for .Net
 
 ## Installation
 
 Use .Net CLI ( Recommand )
 
-    dotnet add package AlibabaCloud.Apigateway.BaseClient
+    dotnet add package AlibabaCloud.APIGateway.Core
 
 Use Package Manager
 
-    Install-Package AlibabaCloud.Apigateway.BaseClient
+    Install-Package AlibabaCloud.APIGateway.Core
 
 ## Issues
 [Opening an Issue](https://github.com/aliyun/alibabacloud-apigateway-core-sdk/issues/new), Issues not conforming to the guidelines may be closed immediately.
