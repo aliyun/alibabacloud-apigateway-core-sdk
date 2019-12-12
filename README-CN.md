@@ -10,8 +10,7 @@ English | [简体中文](README-CN.md)
 
 - [Java](./java/README-CN.md)
 - [Go](./go/README-CN.md)
-- [.Net](./cs/README-CN.md)
-- [TypeScript/Node.js](./ts/README-CN.md)
+- [.Net](./csharp/README-CN.md)
 
 ## 问题
 
