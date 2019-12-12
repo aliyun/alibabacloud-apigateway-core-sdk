@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/alibabacloud-go/tea/tea"
-	"gitlab.alibaba-inc.com/alicloud-sdk/apigateway-core-sdk/go/utils"
+	"github.com/aliyun/alibabacloud-apigateway-core-sdk/go/utils"
 )
 
 var client = new(BaseClient)
