@@ -98,7 +98,6 @@ export default class BaseClient {
     const signedHeader = this._getSignedHeader(request);
     const url = this._buildUrl(request);
     // const signStr = `${request.method}\n${accept}\n${contentMd5}\n${contentType}\n${date}\n${signedHeader}\n${url}`;
-    // console.log(signStr);
     const hmac = createHmac('sha256', this._appSecret);
     hmac.update(request.method + '\n');
     hmac.update((request.headers['accept'] || '') + '\n');
@@ -116,7 +115,6 @@ export default class BaseClient {
 
   async _readAsJSON(request: $tea.Response): Promise<{ [key: string]: any }> {
     let body = await request.readBytes();
-    console.log(body.toString());
     body = JSON.parse(body.toString());
     return body;
   }
