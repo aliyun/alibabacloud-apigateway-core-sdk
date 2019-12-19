@@ -82,6 +82,10 @@ func (client *BaseClient) ReadAsJSON(response *tea.Response) (map[string]interfa
 	return tmp, nil
 }
 
+func (client *BaseClient) IsFail(response *tea.Response) bool {
+	return response.StatusCode < 200 || response.StatusCode >= 300
+}
+
 func (client *BaseClient) DefaultNumber(realNum, defaultNum int) int {
 	if realNum == 0 {
 		return defaultNum
