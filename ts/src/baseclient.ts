@@ -27,6 +27,10 @@ export default class BaseClient {
     return this._domain;
   }
 
+  _isFail(resp: $tea.Response): boolean {
+    return resp.statusCode < 200 || resp.statusCode >= 300;
+  }
+
   _defaultNumber(number: number, defaultNum: number): number {
     if (!number) {
       return defaultNum;
