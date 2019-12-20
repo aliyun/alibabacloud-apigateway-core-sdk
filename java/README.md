@@ -9,7 +9,7 @@ English | [简体中文](README-CN.md)
 <dependency>
    <groupId>com.aliyun</groupId>
    <artifactId>api-gateway-baseclient</artifactId>
-   <version>1.0.0T</version>
+   <version>[1.0.1, 2.0.0)</version>
 </dependency>
 ```
 

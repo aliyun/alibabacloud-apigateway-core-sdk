@@ -11,7 +11,7 @@
 <dependency>
    <groupId>com.aliyun</groupId>
    <artifactId>api-gateway-baseclient</artifactId>
-   <version>1.0.0</version>
+   <version>[1.0.1, 2.0.0)</version>
 </dependency>
 ```
 
