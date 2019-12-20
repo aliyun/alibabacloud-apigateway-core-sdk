@@ -111,11 +111,11 @@ namespace baseClientTest
         {
             string timeBefore = DateTime.UtcNow.GetTimeMillis().ToString();
             Thread.Sleep(10);
-            string timeStamp = (string) TestHelper.RunInstanceMethod(client.GetType(), "_getTimeStamp", client, new object[] { });
+            string timestamp = (string) TestHelper.RunInstanceMethod(client.GetType(), "_getTimestamp", client, new object[] { });
             Thread.Sleep(10);
             string timeAfter = DateTime.UtcNow.GetTimeMillis().ToString();
-            Assert.True(Convert.ToInt64(timeStamp) > Convert.ToInt64(timeBefore));
-            Assert.True(Convert.ToInt64(timeAfter) > Convert.ToInt64(timeStamp));
+            Assert.True(Convert.ToInt64(timestamp) > Convert.ToInt64(timeBefore));
+            Assert.True(Convert.ToInt64(timeAfter) > Convert.ToInt64(timestamp));
         }
 
         [Fact]
@@ -165,6 +165,31 @@ namespace baseClientTest
             request.Headers.Add("baseclient", "go");
             string sign = (string) TestHelper.RunInstanceMethod(typeof(BaseClient), "_getSignature", client, new object[] { request });
             Assert.Equal("h3zZzWDRJ+OiWSlhFl1YKhOvk5hOfxxOVIeH9kV86vw=", sign);
+        }
+
+        [Fact]
+        public void TestIsFail()
+        {
+            Mock<HttpWebResponse> mockHttpWebResponse = new Mock<HttpWebResponse>();
+            mockHttpWebResponse.Setup(p => p.StatusCode).Returns(HttpStatusCode.OK);
+            mockHttpWebResponse.Setup(p => p.StatusDescription).Returns("StatusDescription");
+            mockHttpWebResponse.Setup(p => p.Headers).Returns(new WebHeaderCollection());
+            TeaResponse response = new TeaResponse(mockHttpWebResponse.Object);
+            Assert.False((bool) TestHelper.RunInstanceMethod(typeof(BaseClient), "_isFail", client, new object[] { response }));
+
+            Mock<HttpWebResponse> mockHttpWebResponseFalse = new Mock<HttpWebResponse>();
+            mockHttpWebResponseFalse.Setup(p => p.StatusCode).Returns(HttpStatusCode.BadGateway);
+            mockHttpWebResponseFalse.Setup(p => p.StatusDescription).Returns("StatusDescription");
+            mockHttpWebResponseFalse.Setup(p => p.Headers).Returns(new WebHeaderCollection());
+            TeaResponse responseFalse = new TeaResponse(mockHttpWebResponseFalse.Object);
+            Assert.True((bool) TestHelper.RunInstanceMethod(typeof(BaseClient), "_isFail", client, new object[] { responseFalse }));
+
+            Mock<HttpWebResponse> mockHttpWebResponseContinue = new Mock<HttpWebResponse>();
+            mockHttpWebResponseContinue.Setup(p => p.StatusCode).Returns(HttpStatusCode.Continue);
+            mockHttpWebResponseContinue.Setup(p => p.StatusDescription).Returns("StatusDescription");
+            mockHttpWebResponseContinue.Setup(p => p.Headers).Returns(new WebHeaderCollection());
+            TeaResponse responseContinue = new TeaResponse(mockHttpWebResponseContinue.Object);
+            Assert.True((bool) TestHelper.RunInstanceMethod(typeof(BaseClient), "_isFail", client, new object[] { responseContinue }));
         }
 
     }

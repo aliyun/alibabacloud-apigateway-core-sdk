@@ -58,7 +58,7 @@ namespace AlibabaCloud.Apigateway
             return Guid.NewGuid().ToString();
         }
 
-        protected string _getTimeStamp()
+        protected string _getTimestamp()
         {
             return DateTime.UtcNow.GetTimeMillis().ToString();
         }
@@ -101,6 +101,11 @@ namespace AlibabaCloud.Apigateway
             }
             string signedStr = Convert.ToBase64String(signData);
             return signedStr;
+        }
+
+        public bool _isFail(TeaResponse resp)
+        {
+            return resp.StatusCode < 200 || resp.StatusCode >= 300;
         }
 
         public string _default(string strValue, string strDefault)
