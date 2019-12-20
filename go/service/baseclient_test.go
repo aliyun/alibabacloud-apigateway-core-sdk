@@ -108,3 +108,16 @@ func Test_GetUUID(t *testing.T) {
 	uuid := client.GetUUID()
 	utils.AssertEqual(t, 32, len(uuid))
 }
+
+func Test_IsFail(t *testing.T) {
+	response := &tea.Response{
+		StatusCode: 300,
+	}
+
+	ok := client.IsFail(response)
+	utils.AssertEqual(t, true, ok)
+
+	response.StatusCode = 200
+	ok = client.IsFail(response)
+	utils.AssertEqual(t, false, ok)
+}
