@@ -2,9 +2,10 @@ English | [简体中文](README-CN.md)
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud APIGateway Core SDK
+## 阿里云 API 网关核心 SDK
 
 [![Travis Build Status](https://travis-ci.org/aliyun/alibabacloud-apigateway-core-sdk.svg?branch=master)](https://travis-ci.org/aliyun/alibabacloud-apigateway-core-sdk)
+[![codecov](https://codecov.io/gh/aliyun/alibabacloud-apigateway-core-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/aliyun/alibabacloud-apigateway-core-sdk)
 
 ## 安装
 
