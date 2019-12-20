@@ -131,4 +131,17 @@ public class BaseClientTest {
         when(teaResponse.getResponseBody()).thenReturn("{\"key\":\"value\"}");
         Assert.assertEquals("value", client._readAsJSON(teaResponse).get("key"));
     }
+
+    @Test
+    public void _isFailTest() throws Exception{
+        TeaResponse teaResponse = new TeaResponse();
+        teaResponse.statusCode = 100;
+        Assert.assertTrue(client._isFail(teaResponse));
+
+        teaResponse.statusCode = 200;
+        Assert.assertFalse(client._isFail(teaResponse));
+
+        teaResponse.statusCode = 400;
+        Assert.assertTrue(client._isFail(teaResponse));
+    }
 }

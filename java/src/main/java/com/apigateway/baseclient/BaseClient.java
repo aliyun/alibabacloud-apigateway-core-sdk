@@ -148,4 +148,8 @@ public class BaseClient {
         Map<String, Object> map = gson.fromJson(body, Map.class);
         return map;
     }
+
+    public boolean _isFail(TeaResponse resp) {
+        return resp.statusCode < 200 || resp.statusCode >= 300;
+    }
 }
