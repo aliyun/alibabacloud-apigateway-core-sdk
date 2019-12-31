@@ -1,5 +1,6 @@
 import * as $tea from '@alicloud/tea-typescript';
 import uuid from 'uuid/v4';
+import { stringify } from 'querystring';
 import { createHmac,createHash } from 'crypto';
 
 const filterKey = [ 'x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', 'token']
@@ -36,6 +37,10 @@ export default class BaseClient {
       return defaultNum;
     }
     return number;
+  }
+
+  _toForm(form: { [key: string]: any }): string {
+    return stringify(form);
   }
 
   _toJSONString(body: any): string {

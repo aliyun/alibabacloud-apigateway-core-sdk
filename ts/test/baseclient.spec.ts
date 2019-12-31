@@ -62,10 +62,29 @@ describe('base client', function () {
     assert.strictEqual(await client._getHost(), domain);
   });
 
+  it('_isFail should ok', async function () {
+    const client = new BaseClient({});
+    const res = await request('http://127.0.0.1:8848', { method: 'GET' });
+    const teaRes = new $tea.Response(res);
+    assert.strictEqual(await client._isFail(teaRes), false);
+  });
+
   it('_defaultNumber should ok', async function () {
     const client = new BaseClient({});
     assert.strictEqual(client._defaultNumber(undefined, 2019), 2019);
     assert.strictEqual(client._defaultNumber(2020, 2019), 2020);
+  });
+
+  it('_toForm should ok', async function () {
+    const client = new BaseClient({});
+    assert.strictEqual(client._toForm({
+      boolean: true,
+      string: 'stirng&com',
+      number: 1,
+      undef: undefined,
+      null: null,
+    }), 'boolean=true&string=stirng%26com&number=1&undef=&null=');
+    assert.strictEqual(client._toForm(undefined), '');
   });
 
   it('_toJSONString should ok', async function () {
