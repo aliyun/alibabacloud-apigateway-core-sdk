@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -143,5 +144,20 @@ public class BaseClientTest {
 
         teaResponse.statusCode = 400;
         Assert.assertTrue(client._isFail(teaResponse));
+    }
+
+    @Test
+    public void _toFormTest() throws UnsupportedEncodingException {
+        Map<String, Object> map = new HashMap<>();
+        String result = client._toForm(null);
+        Assert.assertEquals("", result);
+
+        result = client._toForm(map);
+        Assert.assertEquals("", result);
+
+        map.put("form", "test");
+        map.put("param", "test");
+        result = client._toForm(map);
+        Assert.assertEquals("form=test&param=test", result);
     }
 }
