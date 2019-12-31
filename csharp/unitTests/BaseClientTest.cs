@@ -192,5 +192,17 @@ namespace baseClientTest
             Assert.True((bool) TestHelper.RunInstanceMethod(typeof(BaseClient), "_isFail", client, new object[] { responseContinue }));
         }
 
+        [Fact]
+        public void TestToForm()
+        {
+            Assert.Empty((string) TestHelper.RunInstanceMethod(typeof(BaseClient), "_toForm", client, new object[] { null }));
+            Assert.Empty((string) TestHelper.RunInstanceMethod(typeof(BaseClient), "_toForm", client, new object[] { new Dictionary<string, object>() }));
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("form", "test");
+            dict.Add("param", "test");
+            Assert.Equal("form=test&param=test", (string) TestHelper.RunInstanceMethod(typeof(BaseClient), "_toForm", client, new object[] { dict }));
+        }
+
     }
 }

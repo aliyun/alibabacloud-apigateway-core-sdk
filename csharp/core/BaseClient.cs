@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 using AlibabaCloud.Apigateway.Utils;
 
@@ -101,6 +102,31 @@ namespace AlibabaCloud.Apigateway
             }
             string signedStr = Convert.ToBase64String(signData);
             return signedStr;
+        }
+
+        protected string _toForm(Dictionary<string, object> map)
+        {
+            if (map == null || map.Count <= 0)
+            {
+                return "";
+            }
+            StringBuilder result = new StringBuilder();
+            bool first = true;
+            foreach (var entry in map)
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    result.Append("&");
+                }
+                result.Append(HttpUtility.UrlEncode(entry.Key, Encoding.UTF8));
+                result.Append("=");
+                result.Append(HttpUtility.UrlEncode(entry.Value.ToSafeString(""), Encoding.UTF8));
+            }
+            return result.ToString();
         }
 
         public bool _isFail(TeaResponse resp)
