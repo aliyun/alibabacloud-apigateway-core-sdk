@@ -121,3 +121,15 @@ func Test_IsFail(t *testing.T) {
 	ok = client.IsFail(response)
 	utils.AssertEqual(t, false, ok)
 }
+
+func Test_ToForm(t *testing.T){
+	str := client.ToForm(nil)
+	utils.AssertEqual(t, "", str)
+	
+	a := map[string]interface{}{
+		"key1":"value1",
+		"key2":"value2",
+	}
+	str = client.ToForm(a)
+	utils.AssertEqual(t, "key1=value1&key2=value2", str)
+}
