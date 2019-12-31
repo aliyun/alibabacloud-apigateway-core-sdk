@@ -4,7 +4,9 @@ import (
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
@@ -100,4 +102,23 @@ func (client *BaseClient) Default(realStr, defaultStr string) string {
 	}
 
 	return realStr
+}
+
+func (client *BaseClient) ToForm(a map[string]interface{}) string {
+	if a == nil || len(a) == 0 {
+		return ""
+	}
+	res := ""
+	first := true
+	for k, v := range a {
+		if first {
+			first = false
+		} else {
+			res += "&"
+		}
+		res += url.QueryEscape(k)
+		res += "="
+		res += url.QueryEscape(fmt.Sprintf("%v", v))
+	}
+	return res
 }
