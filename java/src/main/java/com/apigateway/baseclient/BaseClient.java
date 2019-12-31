@@ -10,6 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -66,6 +67,25 @@ public class BaseClient {
 
     protected String _toJSONString(Map<String, Object> map) {
         return new Gson().toJson(map);
+    }
+
+    protected String _toForm(Map<String, Object> map) throws UnsupportedEncodingException {
+        if (null == map || map.size() <= 0) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (first) {
+                first = false;
+            } else {
+                result.append("&");
+            }
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8"));
+        }
+        return result.toString();
     }
 
     protected String _getContentMD5(String bodyStr) throws NoSuchAlgorithmException, IOException {
