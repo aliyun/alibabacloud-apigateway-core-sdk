@@ -26,4 +26,4 @@ English | [简体中文](README-CN.md)
 
 [Apache-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
-Copyright 1999-2019 Alibaba Group Holding Ltd.
+Copyright (c) 2009-present, Alibaba Cloud All rights reserved.
