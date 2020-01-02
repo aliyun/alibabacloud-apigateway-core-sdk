@@ -122,14 +122,14 @@ func Test_IsFail(t *testing.T) {
 	utils.AssertEqual(t, false, ok)
 }
 
-func Test_ToForm(t *testing.T){
+func Test_ToForm(t *testing.T) {
 	str := client.ToForm(nil)
 	utils.AssertEqual(t, "", str)
-	
+
 	a := map[string]interface{}{
-		"key1":"value1",
-		"key2":"value2",
+		"key1": "value1",
+		"key2": "value2",
 	}
 	str = client.ToForm(a)
-	utils.AssertEqual(t, "key1=value1&key2=value2", str)
+	utils.AssertContains(t, str, "key1=value1")
 }
