@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -15,13 +16,20 @@ import (
 )
 
 type BaseClient struct {
-	RegionId  string `json:"regionId" xml:"regionId"`
-	Protocol  string `json:"protocol" xml:"protocol"`
-	Domain    string `json:"domain" xml:"domain"`
-	Token     string `json:"token" xml:"token"`
-	Stage     string `json:"stage" xml:"stage"`
-	AppKey    string `json:"appKey" xml:"appKey"`
-	AppSecret string `json:"appSecret" xml:"appSecret"`
+	RegionId       string `json:"regionId" xml:"regionId"`
+	Protocol       string `json:"protocol" xml:"protocol"`
+	Domain         string `json:"domain" xml:"domain"`
+	Token          string `json:"token" xml:"token"`
+	Stage          string `json:"stage" xml:"stage"`
+	AppKey         string `json:"appKey" xml:"appKey"`
+	AppSecret      string `json:"appSecret" xml:"appSecret"`
+	ReadTimeout    int    `json:"readTimeout" xml:"readTimeout"`
+	ConnectTimeout int    `json:"connectTimeout" xml:"connectTimeout"`
+	LocalAddr      string `json:"localAddr" xml:"localAddr"`
+	HttpProxy      string `json:"httpProxy" xml:"httpProxy"`
+	HttpsProxy     string `json:"httpsProxy" xml:"httpsProxy"`
+	NoProxy        string `json:"noProxy" xml:"noProxy"`
+	MaxIdleConns   int    `json:"maxIdleConns" xml:"maxIdleConns"`
 }
 
 func (client *BaseClient) InitClient(config map[string]interface{}) error {
@@ -31,6 +39,14 @@ func (client *BaseClient) InitClient(config map[string]interface{}) error {
 	client.Token = getStringValue(config["token"])
 	client.AppKey = getStringValue(config["appKey"])
 	client.AppSecret = getStringValue(config["appSecret"])
+	client.ReadTimeout = getIntValue(config["readTimeout"])
+	client.ConnectTimeout = getIntValue(config["connectTimeout"])
+	client.LocalAddr = getStringValue(config["localAddr"])
+	client.HttpProxy = getStringValue(config["httpProxy"])
+	client.HttpsProxy = getStringValue(config["httpsProxy"])
+	client.NoProxy = getStringValue(config["noProxy"])
+	client.MaxIdleConns = getIntValue(config["maxIdleConns"])
+	client.Stage = getStringValue(config["stage"])
 	return nil
 }
 
@@ -38,8 +54,9 @@ func (client *BaseClient) GetHost() string {
 	return client.Domain
 }
 
-func (client *BaseClient) GetContentMD5(bodyStr string) string {
-	sum := md5.Sum([]byte(bodyStr))
+func (client *BaseClient) GetContentMD5(body map[string]interface{}) string {
+	byt, _ := json.Marshal(body)
+	sum := md5.Sum(byt)
 	b64 := base64.StdEncoding.EncodeToString(sum[:])
 	return b64
 }
@@ -104,8 +121,33 @@ func (client *BaseClient) Default(realStr, defaultStr string) string {
 	return realStr
 }
 
+func (client *BaseClient) Equal(realStr, defaultStr string) bool {
+	return realStr == defaultStr
+}
+
+func (client *BaseClient) NotNull(a map[string]interface{}) bool {
+	if a == nil {
+		return false
+	}
+	return len(a) > 0
+}
+
+func (client *BaseClient) ToQuery(filter map[string]interface{}) map[string]string {
+	tmp := make(map[string]interface{})
+	byt, _ := json.Marshal(filter)
+	_ = json.Unmarshal(byt, &tmp)
+
+	result := make(map[string]string)
+	for key, value := range tmp {
+		filterValue := reflect.ValueOf(value)
+		flatRepeatedList(filterValue, result, key)
+	}
+
+	return result
+}
+
 func (client *BaseClient) ToForm(a map[string]interface{}) string {
-	if a == nil || len(a) == 0 {
+	if a == nil {
 		return ""
 	}
 	res := ""
