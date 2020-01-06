@@ -81,8 +81,8 @@ func Test_ReadAsJSON(t *testing.T) {
 }
 
 func Test_GetContentMD5(t *testing.T) {
-	md5 := client.GetContentMD5("apigateway")
-	utils.AssertEqual(t, "+wzeYiiyHYnsIitF7+xU5w==", md5)
+	md5 := client.GetContentMD5(map[string]interface{}{"test": "ok"})
+	utils.AssertEqual(t, "b969h28MOfCVGrra1smdCg==", md5)
 }
 
 func Test_GetSignature(t *testing.T) {
@@ -132,4 +132,22 @@ func Test_ToForm(t *testing.T) {
 	}
 	str = client.ToForm(a)
 	utils.AssertContains(t, str, "key1=value1")
+}
+
+func Test_Equal(t *testing.T) {
+	ok := client.Equal("a", "a")
+	utils.AssertEqual(t, ok, true)
+}
+
+func Test_NotNull(t *testing.T) {
+	ok := client.NotNull(nil)
+	utils.AssertEqual(t, ok, false)
+
+	ok = client.NotNull(map[string]interface{}{"test": "ok"})
+	utils.AssertEqual(t, ok, true)
+}
+
+func Test_ToQuery(t *testing.T) {
+	res := client.ToQuery(map[string]interface{}{"test": "ok"})
+	utils.AssertEqual(t, res["test"], "ok")
 }
