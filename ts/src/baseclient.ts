@@ -3,7 +3,7 @@ import uuid from 'uuid/v4';
 import { stringify } from 'querystring';
 import { createHmac,createHash } from 'crypto';
 
-const filterKey = [ 'x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', 'token']
+const filterKey = ['x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', 'token', 'reflect']
 
 export default class BaseClient {
 
@@ -14,6 +14,13 @@ export default class BaseClient {
   _appKey: string
   _appSecret: string
   _stage: string
+  _readTimeout: number
+  _connectTimeout: number
+  _localAddr: string
+  _httpProxy: string
+  _httpsProxy: string
+  _noProxy: string
+  _maxIdleConns: number
 
   constructor(config: { [key: string]: any }) {
     this._protocol = config['protocol'] || 'http';
@@ -22,6 +29,13 @@ export default class BaseClient {
     this._token = config['token'] || '';
     this._appKey = config['appKey'] || '';
     this._appSecret = config['appSecret'] || '';
+    this._readTimeout = config['readTimeout'] || 0;
+    this._connectTimeout = config['connectTimeout'] || 0;
+    this._localAddr = config['localAddr'] || '';
+    this._httpProxy = config['httpProxy'] || '';
+    this._httpsProxy = config['httpsProxy'] || '';
+    this._noProxy = config['noProxy'] || '';
+    this._maxIdleConns = config['maxIdleConns'] || 0;
   }
 
   _getHost(): string {
@@ -58,9 +72,10 @@ export default class BaseClient {
     return value;
   }
 
-  _getContentMD5(body: string): string {
+  _getContentMD5(body: { [key: string]: any }): string {
+    const bodyJson = JSON.stringify(body);
     const hash = createHash('md5');
-    hash.update(body);
+    hash.update(bodyJson);
     return hash.digest('hex');
   }
 
@@ -137,5 +152,38 @@ export default class BaseClient {
     return Date.now().toString();
   }
 
+  _equal(realStr: string , defaultStr: string): boolean{
+    return realStr === defaultStr;
+  }
+
+  _notNull(obj: { [key: string]: any }): boolean{
+    if (typeof obj === 'undefined' || obj == null) {
+      return false;
+    }
+    return Object.keys(obj).length > 0
+  }
+
+  _toQuery(query: { [key: string]: any } , prefix: string = ''): { [key: string]: string } {
+    let ret: { [key: string]: string } = {};
+    if (!this._notNull(query)) {
+      return ret;
+    }
+    Object.keys(query).forEach(key => {
+      if (typeof query[key] === 'undefined' || query[key] == null) {
+        return;
+      }
+      const newKey = prefix + key;
+      if (query[key] instanceof Object) {
+        const tmp = this._toQuery(query[key], newKey + '.');
+        ret = {
+          ...ret,
+          ...tmp,
+        };
+        return;
+      }
+      ret[newKey] = query[key].toString();
+    })
+    return ret;
+  }
 
 }
