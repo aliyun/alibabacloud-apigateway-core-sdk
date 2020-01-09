@@ -28,6 +28,20 @@ public class BaseClientTest {
     }
 
     @Test
+    public void constructTest() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("protocol", "https");
+        map.put("readTimeout", 888);
+        map.put("connectTimeout", 666);
+        map.put("maxIdleConns", 111);
+        client  = new BaseClient(map);
+        Assert.assertEquals("https", client._protocol);
+        Assert.assertEquals(888, client._readTimeout);
+        Assert.assertEquals(666, client._connectTimeout);
+        Assert.assertEquals(111, client._maxIdleConns);
+    }
+
+    @Test
     public void _defaultNumberTest() {
         Assert.assertEquals(6l, client._defaultNumber(null, 6L));
         Assert.assertEquals(6l, client._defaultNumber(-1, 6L));
@@ -74,8 +88,11 @@ public class BaseClientTest {
 
     @Test
     public void _getContentMD5Test() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Assert.assertEquals("", client._getContentMD5(map));
+        map.put("test", "test");
         Assert.assertEquals("", client._getContentMD5(null));
-        Assert.assertEquals("CY9rzUYh03PK3k6DJie09g==", client._getContentMD5("test"));
+        Assert.assertEquals("govO+HY8G8YW4loGvkuQ/w==", client._getContentMD5(map));
     }
 
     @Test
@@ -134,7 +151,8 @@ public class BaseClientTest {
     }
 
     @Test
-    public void _isFailTest() throws Exception{
+    public void _isFailTest() throws Exception {
+        Assert.assertFalse(client._isFail(null));
         TeaResponse teaResponse = new TeaResponse();
         teaResponse.statusCode = 100;
         Assert.assertTrue(client._isFail(teaResponse));
@@ -157,7 +175,36 @@ public class BaseClientTest {
 
         map.put("form", "test");
         map.put("param", "test");
+        map.put("nullTest", null);
         result = client._toForm(map);
         Assert.assertEquals("form=test&param=test", result);
+    }
+
+    @Test
+    public void _equalTest() {
+        Assert.assertFalse(client._equal("", ""));
+        Assert.assertFalse(client._equal("ss", ""));
+        Assert.assertFalse(client._equal("ss", "sa"));
+        Assert.assertTrue(client._equal("ss", "ss"));
+    }
+
+    @Test
+    public void _toQueryTest() {
+        Map<String, Object> map = new HashMap<>();
+        Assert.assertEquals(0, client._toQuery(null).size());
+
+        map.put("test", "test");
+        map.put("nullTest", null);
+        Assert.assertEquals("test", client._toQuery(map).get("test"));
+        Assert.assertFalse(client._toQuery(map).containsKey("nullTest"));
+    }
+
+    @Test
+    public void _notNullTest() {
+        Map<String, Object> map = new HashMap<>();
+        Assert.assertFalse(client._notNull(null));
+        Assert.assertFalse(client._notNull(map));
+        map.put("test", "test");
+        Assert.assertTrue(client._notNull(map));
     }
 }

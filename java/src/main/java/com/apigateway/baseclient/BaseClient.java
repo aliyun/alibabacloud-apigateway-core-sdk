@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -23,6 +22,16 @@ public class BaseClient {
     protected String _token;
     protected String _domain;
     protected String _appSecret;
+
+    protected long _readTimeout;
+    protected long _connectTimeout;
+    protected String _localAddr;
+    protected String _httpProxy;
+    protected String _httpsProxy;
+    protected String _noProxy;
+    protected long _maxIdleConns;
+    protected String _protocol;
+
     private static final String[] moveList = new String[]{
             "x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "date", "host", "token"};
 
@@ -33,6 +42,14 @@ public class BaseClient {
         this._token = (String) map.get("token");
         this._domain = (String) map.get("domain");
         this._appSecret = (String) map.get("appSecret");
+        this._protocol = map.get("protocol") == null ? "http" : (String) map.get("protocol");
+        this._noProxy = (String) map.get("noProxy");
+        this._httpsProxy = (String) map.get("httpsProxy");
+        this._httpProxy = (String) map.get("httpProxy");
+        this._localAddr = (String) map.get("localAddr");
+        this._readTimeout = map.get("readTimeout") == null ? 10000 : Long.parseLong(String.valueOf(map.get("readTimeout")));
+        this._connectTimeout = map.get("connectTimeout") == null ? 5000 : Long.parseLong(String.valueOf(map.get("connectTimeout")));
+        this._maxIdleConns = map.get("maxIdleConns") == null ? 0 : Long.parseLong(String.valueOf(map.get("maxIdleConns")));
     }
 
     protected Number _defaultNumber(Integer maxAttempts, long defaultNumber) {
@@ -69,29 +86,11 @@ public class BaseClient {
         return new Gson().toJson(map);
     }
 
-    protected String _toForm(Map<String, Object> map) throws UnsupportedEncodingException {
+    protected String _getContentMD5(Map<String, Object> map) throws NoSuchAlgorithmException, IOException {
         if (null == map || map.size() <= 0) {
             return "";
         }
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8"));
-        }
-        return result.toString();
-    }
-
-    protected String _getContentMD5(String bodyStr) throws NoSuchAlgorithmException, IOException {
-        if (StringUtils.isEmpty(bodyStr)) {
-            return "";
-        }
+        String bodyStr = new Gson().toJson(map);
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] result = md.digest(bodyStr.getBytes(TeaRequest.URL_ENCODING));
         return Base64.getEncoder().encodeToString(result);
@@ -169,7 +168,63 @@ public class BaseClient {
         return map;
     }
 
-    public boolean _isFail(TeaResponse resp) {
-        return resp.statusCode < 200 || resp.statusCode >= 300;
+    protected boolean _equal(String bodystr, String type) {
+        if (StringUtils.isEmpty(bodystr) || StringUtils.isEmpty(type)) {
+            return false;
+        }
+        return type.equals(bodystr);
+    }
+
+    protected String _toForm(Map<String, ?> map) throws UnsupportedEncodingException {
+        if (null == map) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
+            if (entry.getValue() == null) {
+                continue;
+            }
+            if (first) {
+                first = false;
+            } else {
+                result.append("&");
+            }
+            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(String.valueOf(entry.getValue()), "UTF-8"));
+        }
+        return result.toString();
+    }
+
+    protected boolean _notNull(Map<String, ?> map) {
+        if (null == map) {
+            return false;
+        }
+        return map.size() > 0;
+    }
+
+    protected Map<String, String> _toQuery(Map<String, ?> map) {
+        Map<String, String> query = new HashMap<>();
+        if (null == map) {
+            return query;
+        }
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
+            if (entry.getValue() == null) {
+                continue;
+            }
+            query.put(entry.getKey(), String.valueOf(entry.getValue()));
+        }
+        return query;
+    }
+
+    protected boolean _isFail(TeaResponse response) {
+        if (null == response) {
+            return false;
+        }
+        if (200 > response.statusCode || 300 <= response.statusCode) {
+            return true;
+        }
+        return false;
     }
 }
