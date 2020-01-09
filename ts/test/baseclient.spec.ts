@@ -109,7 +109,7 @@ describe('base client', function () {
       appKey: 'appKey',
       appSecret: 'appSecret',
     });
-    assert.ok(await client._getContentMD5(client._toJSONString(bodyData)));
+    assert.ok(await client._getContentMD5(bodyData));
   });
 
   it('_buildUrl should ok', async function () {
@@ -161,6 +161,59 @@ describe('base client', function () {
       appSecret: 'appSecret'
     });
     assert.ok(client._getSignature(req));
+  });
+
+  it('_equal should ok', async function () {
+    const client = new BaseClient({
+      appSecret: 'appSecret'
+    });
+    assert.ok(client._equal('string', 'string'));
+    assert.ok(client._equal('string', 'number') === false);
+  });
+
+  it('_notNull should ok', async function () {
+    const client = new BaseClient({
+      appSecret: 'appSecret'
+    });
+    assert.ok(client._notNull({ 'string': 'string' }));
+    assert.ok(client._notNull(undefined) === false);
+    assert.ok(client._notNull(null) === false);
+    assert.ok(client._notNull({}) === false);
+  });
+
+  it('_toQuery should ok', async function () {
+    const client = new BaseClient({
+      appSecret: 'appSecret'
+    });
+    assert.deepStrictEqual(client._toQuery({
+      boolean: true,
+      string: 'stirng&com',
+      number: 1,
+      undef: undefined,
+      null: null,
+      obj: {
+        boolean: true,
+        string: 'stirng&cominner1',
+        number: 1,
+        obj: {
+          boolean: true,
+          string: 'stirng&cominner2',
+          number: 1,
+        }
+      }
+    }), {
+        boolean: 'true',
+        string: 'stirng&com',
+        number: '1',
+        'obj.boolean': 'true',
+        'obj.string': 'stirng&cominner1',
+        'obj.number': '1',
+        'obj.obj.boolean': 'true',
+        'obj.obj.string': 'stirng&cominner2',
+        'obj.obj.number': '1',
+    });
+    assert.deepStrictEqual(client._toQuery(undefined), {});
+    assert.deepStrictEqual(client._toQuery(null), {});
   });
 
   after(() => {
