@@ -9,3 +9,8 @@ target/
 *.iml
 .idea/*
 java/target/*
+*.sum
+.history/
+.DS_Store
+coverage.out
+coverage.html
