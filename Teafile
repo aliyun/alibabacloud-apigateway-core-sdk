@@ -4,6 +4,6 @@
 	"version": "0.0.1",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/go/service:v1.0.0"
+		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/service:v1.0.0"
 	}
 }

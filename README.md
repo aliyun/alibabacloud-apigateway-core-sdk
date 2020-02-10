@@ -10,7 +10,7 @@ English | [简体中文](README-CN.md)
 ## Installation
 
 - [Java](./java/README.md)
-- [Go](./go/README.md)
+- [Go](./golang/README.md)
 - [.Net](./csharp/README.md)
 - [TypeScript/Node.js](./ts/README.md)
 
