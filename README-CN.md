@@ -10,7 +10,7 @@ English | [简体中文](README-CN.md)
 ## 安装
 
 - [Java](./java/README-CN.md)
-- [Go](./go/README-CN.md)
+- [Go](./golang/README-CN.md)
 - [.Net](./csharp/README-CN.md)
 - [TypeScript/Node.js](./ts/README-CN.md)
 

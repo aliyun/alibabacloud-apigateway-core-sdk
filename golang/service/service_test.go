@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/alibabacloud-go/tea/tea"
-	"github.com/aliyun/alibabacloud-apigateway-core-sdk/go/utils"
+	"github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/utils"
 )
 
 func Test_GetContentMD5(t *testing.T) {
