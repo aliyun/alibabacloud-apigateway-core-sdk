@@ -61,9 +61,9 @@ export default class Client {
     hmac.update((request.headers['accept'] || '') + '\n');
     hmac.update((request.headers['content-md5'] || '') + '\n');
     hmac.update((request.headers['content-type'] || '') + '\n');
-    hmac.update(request.headers['date'] + '\n');
-    hmac.update(signedHeader + '\n');
-    hmac.update(url);
+    hmac.update((request.headers['date'] || '') + '\n');
+    hmac.update((signedHeader || '') + '\n');
+    hmac.update(url || '');
     return hmac.digest('base64');
   }
 
