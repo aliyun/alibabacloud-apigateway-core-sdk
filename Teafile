@@ -4,7 +4,8 @@
 	"version": "0.0.1",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/service:v1.0.0"
+		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/service:v1.0.0",
+		"csharp": "AlibabaCloud.APIGatewayUtil:0.0.1"
 	},
 	"php": {
 		"package": "AlibabaCloud.ApiGateway.SDK",
@@ -17,5 +18,9 @@
 				"LICENSE": "./LICENSE"
 			}
 		}
+	},
+	"csharp": {
+		"namespace": "AlibabaCloud.APIGatewayUtil",
+		"className": "Common"
 	}
 }
