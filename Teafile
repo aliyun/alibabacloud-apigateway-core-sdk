@@ -5,5 +5,17 @@
 	"main": "./main.tea",
 	"releases": {
 		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/service:v1.0.0"
+	},
+	"php": {
+		"package": "AlibabaCloud.ApiGateway.SDK",
+		"clientName": "BaseClient",
+		"packageInfo": {
+			"name": "alibabacloud/apigateway-sdk-core",
+			"desc": "Alibaba Cloud ApiGateway SDK Core Library for PHP",
+			"github": "https://github.com/aliyun/alibabacloud-apigateway-core-sdk",
+			"files": {
+				"LICENSE": "./LICENSE"
+			}
+		}
 	}
 }
