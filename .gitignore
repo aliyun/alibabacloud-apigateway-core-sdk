@@ -16,3 +16,6 @@ coverage.out
 coverage.html
 .nyc_output/
 coverage/
+csharp/**/bin
+csharp/**/obj
+csharp/**/.vs

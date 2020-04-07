@@ -39,12 +39,12 @@ jobs:
         - sudo ln -sf ~/dotnet/dotnet /usr/bin/dotnet
         - dotnet --info
       install:
-        - cd csharp/unitTests
+        - cd csharp/tests
         - dotnet tool install --global altcover.visualizer
         - dotnet restore
         - dotnet build
         - cd ../
       script:
-        - dotnet test unitTests/ /p:AltCover=true
+        - dotnet test tests/ /p:AltCover=true
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF csharp
