@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/utils"
+	"github.com/alibabacloud-go/tea/utils"
 )
 
 func Test_flatRepeatedList(t *testing.T) {
