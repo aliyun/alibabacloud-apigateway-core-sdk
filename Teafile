@@ -1,18 +1,24 @@
 {
 	"scope": "alibabacloud",
 	"name": "APIGatewayUtil",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/aliyun/alibabacloud-apigateway-core-sdk/golang/service:v1.0.0",
-		"csharp": "AlibabaCloud.APIGatewayUtil:0.0.1"
+		"go": "github.com/alibabacloud-go/apigateway-util/service:v1.0.0",
+		"csharp": "AlibabaCloud.APIGatewayUtil:0.0.1",
+		"java": "com.aliyun:api-gateway-baseclient:1.0.3",
+		"ts": "@alicloud/api-gateway-baseclient:1.4.1",
+		"php": "alibabacloud/apigateway-util:^0.1.0"
+	},
+	"java": {
+		"package": "com.aliyun.api_gateway_baseclient"
 	},
 	"php": {
-		"package": "AlibabaCloud.ApiGateway.SDK",
+		"package": "AlibabaCloud.ApiGateway.Util",
 		"clientName": "BaseClient",
 		"packageInfo": {
-			"name": "alibabacloud/apigateway-sdk-core",
-			"desc": "Alibaba Cloud ApiGateway SDK Core Library for PHP",
+			"name": "alibabacloud/apigateway-util",
+			"desc": "Alibaba Cloud ApiGateway Util Library for PHP",
 			"github": "https://github.com/aliyun/alibabacloud-apigateway-core-sdk",
 			"files": {
 				"LICENSE": "./LICENSE"
