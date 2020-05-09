@@ -119,9 +119,10 @@ func getSignature(appSecret string, req *tea.Request) string {
 	accept := req.Headers["accept"]
 	contentType := req.Headers["content-type"]
 	contentMd5 := req.Headers["content-md5"]
-	signStr := req.Method + "\n" + accept + "\n" + contentMd5 + "\n" + contentType + "\n" + date + "\n" + signedHeader + "\n" + url
+	signStr := tea.StringValue(req.Method) + "\n" + accept + "\n" + contentMd5 + "\n" + contentType + "\n" + date + "\n" + signedHeader + "\n" + url
 	h := hmac.New(func() hash.Hash { return sha256.New() }, []byte(appSecret))
 	io.WriteString(h, signStr)
+	fmt.Println(signStr)
 	signedStr := base64.StdEncoding.EncodeToString(h.Sum(nil))
 	return signedStr
 }
@@ -151,7 +152,7 @@ func isFilterKey(key string) bool {
 }
 
 func buildUrl(request *tea.Request) string {
-	url := request.Pathname
+	url := tea.StringValue(request.Pathname)
 	hs := newSorter(request.Query)
 	hs.Sort()
 	if len(hs.Keys) > 0 {
