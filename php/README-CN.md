@@ -2,14 +2,14 @@ English | [简体中文](README-CN.md)
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud ApiGateway SDK Core Library for PHP
+## Alibaba Cloud ApiGateway Util Library for PHP
 
 ## Installation
 
 ### Composer
 
 ```bash
-composer require alibabacloud/apigateway-sdk-core
+composer require alibabacloud/apigateway-util
 ```
 
 ## Issues
