@@ -2,14 +2,14 @@
 
 ![](https://aliyunsdk-pages.alicdn.com/icons/AlibabaCloud.svg)
 
-## Alibaba Cloud ApiGateway SDK Core Library for PHP
+## Alibaba Cloud ApiGateway Util Library for PHP
 
 ## 安装
 
 ### Composer
 
 ```bash
-composer require alibabacloud/apigateway-sdk-core
+composer require alibabacloud/apigateway-util
 ```
 
 ## 问题
