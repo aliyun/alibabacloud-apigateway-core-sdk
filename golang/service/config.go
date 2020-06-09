@@ -26,7 +26,7 @@ type Sorter struct {
 }
 
 // newSorter is an additional function for function Sign.
-func newSorter(m map[string]string) *Sorter {
+func newSorter(m map[string]*string) *Sorter {
 	hs := &Sorter{
 		Keys: make([]string, 0, len(m)),
 		Vals: make([]string, 0, len(m)),
@@ -34,7 +34,7 @@ func newSorter(m map[string]string) *Sorter {
 
 	for k, v := range m {
 		hs.Keys = append(hs.Keys, k)
-		hs.Vals = append(hs.Vals, v)
+		hs.Vals = append(hs.Vals, tea.StringValue(v))
 	}
 	return hs
 }
@@ -60,7 +60,7 @@ func (hs *Sorter) Swap(i, j int) {
 	hs.Keys[i], hs.Keys[j] = hs.Keys[j], hs.Keys[i]
 }
 
-func flatRepeatedList(dataValue reflect.Value, result map[string]string, prefix string) {
+func flatRepeatedList(dataValue reflect.Value, result map[string]*string, prefix string) {
 	if !dataValue.IsValid() {
 		return
 	}
@@ -71,11 +71,11 @@ func flatRepeatedList(dataValue reflect.Value, result map[string]string, prefix 
 	} else if dataType.Kind().String() == "map" {
 		handleMap(dataValue, result, prefix)
 	} else {
-		result[prefix] = fmt.Sprintf("%v", dataValue.Interface())
+		result[prefix] = tea.String(fmt.Sprintf("%v", dataValue.Interface()))
 	}
 }
 
-func handleRepeatedParams(repeatedFieldValue reflect.Value, result map[string]string, prefix string) {
+func handleRepeatedParams(repeatedFieldValue reflect.Value, result map[string]*string, prefix string) {
 	if repeatedFieldValue.IsValid() && !repeatedFieldValue.IsNil() {
 		for m := 0; m < repeatedFieldValue.Len(); m++ {
 			elementValue := repeatedFieldValue.Index(m)
@@ -84,13 +84,13 @@ func handleRepeatedParams(repeatedFieldValue reflect.Value, result map[string]st
 			if fieldValue.Kind().String() == "map" {
 				handleMap(fieldValue, result, key)
 			} else {
-				result[key] = fmt.Sprintf("%v", fieldValue.Interface())
+				result[key] = tea.String(fmt.Sprintf("%v", fieldValue.Interface()))
 			}
 		}
 	}
 }
 
-func handleMap(valueField reflect.Value, result map[string]string, prefix string) {
+func handleMap(valueField reflect.Value, result map[string]*string, prefix string) {
 	if valueField.IsValid() && valueField.String() != "" {
 		valueFieldType := valueField.Type()
 		if valueFieldType.Kind().String() == "map" {
@@ -115,14 +115,13 @@ func handleMap(valueField reflect.Value, result map[string]string, prefix string
 func getSignature(appSecret string, req *tea.Request) string {
 	signedHeader := getSignedHeader(req)
 	url := buildUrl(req)
-	date := req.Headers["date"]
-	accept := req.Headers["accept"]
-	contentType := req.Headers["content-type"]
-	contentMd5 := req.Headers["content-md5"]
+	date := tea.StringValue(req.Headers["date"])
+	accept := tea.StringValue(req.Headers["accept"])
+	contentType := tea.StringValue(req.Headers["content-type"])
+	contentMd5 := tea.StringValue(req.Headers["content-md5"])
 	signStr := tea.StringValue(req.Method) + "\n" + accept + "\n" + contentMd5 + "\n" + contentType + "\n" + date + "\n" + signedHeader + "\n" + url
 	h := hmac.New(func() hash.Hash { return sha256.New() }, []byte(appSecret))
 	io.WriteString(h, signStr)
-	fmt.Println(signStr)
 	signedStr := base64.StdEncoding.EncodeToString(h.Sum(nil))
 	return signedStr
 }
@@ -138,7 +137,7 @@ func getSignedHeader(request *tea.Request) string {
 			signedHeader += value + ":" + hs.Vals[key] + "\n"
 		}
 	}
-	request.Headers["x-ca-signature-headers"] = strings.TrimSuffix(signedHeaderKeys, ",")
+	request.Headers["x-ca-signature-headers"] = tea.String(strings.TrimSuffix(signedHeaderKeys, ","))
 	return strings.TrimSuffix(signedHeader, "\n")
 }
 

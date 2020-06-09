@@ -19,16 +19,16 @@ func GetSignature(request *tea.Request, secret *string) *string {
 	return tea.String(getSignature(tea.StringValue(secret), request))
 }
 
-func IsFail(code *int) bool {
-	return tea.IntValue(code) < 200 || tea.IntValue(code) >= 300
+func IsFail(code *int) *bool {
+	return tea.Bool(tea.IntValue(code) < 200 || tea.IntValue(code) >= 300)
 }
 
-func ToQuery(filter map[string]interface{}) map[string]string {
+func ToQuery(filter map[string]interface{}) map[string]*string {
 	tmp := make(map[string]interface{})
 	byt, _ := json.Marshal(filter)
 	_ = json.Unmarshal(byt, &tmp)
 
-	result := make(map[string]string)
+	result := make(map[string]*string)
 	for key, value := range tmp {
 		filterValue := reflect.ValueOf(value)
 		flatRepeatedList(filterValue, result, key)
