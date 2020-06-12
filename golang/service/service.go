@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"reflect"
+	"time"
 
 	"github.com/alibabacloud-go/tea/tea"
 )
@@ -35,4 +36,8 @@ func ToQuery(filter map[string]interface{}) map[string]*string {
 	}
 
 	return result
+}
+
+func GetTimestamp() *string {
+	return tea.String(tea.ToString(time.Now().UnixNano() / 1000000))
 }
