@@ -1,9 +1,42 @@
+/**
+ * This is an util for APIGateway SDK
+ */
+
+/**
+ * Get signature according to request and secret
+ * @param request  an obejct of $Request
+ * @param secret AccessKeySecret
+ * @return the signature
+ * @example h3zZzWDRJ+OiWSlhFl1YKhOvk5hOfxxOVIeH9kV86vw=
+ */
 static function getSignature(request: $Request, secret: string): string;
 
+/**
+ * Parse filter into a object which's type is map[string]string
+ * @param filter query param
+ * @return the object
+ */
 static function toQuery(filter: object): map[string]string;
 
+/**
+ * If code is between 200 and 300, return false, or return true
+ * @param code the statuscode
+ * @return the judged result
+ * @example true
+ */
 static function isFail(code: number): boolean;
 
+/**
+ * Get md5 according to the body string
+ * @param body the string
+ * @return the md5
+ * @example when body is "{\"test\":\"ok\"}", return b969h28MOfCVGrra1smdCg==
+ */
 static function getContentMD5(body: string): string;
 
+/**
+ * Get timestamp
+ * @return the timestamp string
+ * @example 1525872629832
+ */
 static function getTimestamp(): string;
