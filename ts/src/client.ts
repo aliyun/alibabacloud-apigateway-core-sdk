@@ -100,4 +100,9 @@ export default class Client {
     return hash.digest('hex');
   }
 
+  static getTimestamp(): string {
+    const timestamp = new Date().getTime();
+    return timestamp.toString();
+  }
+
 }
