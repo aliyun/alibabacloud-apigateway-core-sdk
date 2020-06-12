@@ -46,7 +46,12 @@ describe('base client', function () {
   });
 
   it('getContentMD5 should ok', async function () {
-    assert.ok(await client.getContentMD5(JSON.stringify(bodyData)));
+    assert.ok(client.getContentMD5(JSON.stringify(bodyData)));
+  });
+
+  it('getTimestamp should ok', async function () {
+    const timestamp = client.getTimestamp();
+    assert.strictEqual(timestamp.length, 13);
   });
 
   it('getSignature should ok', async function () {
