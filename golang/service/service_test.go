@@ -28,6 +28,11 @@ func Test_IsFail(t *testing.T) {
 	utils.AssertEqual(t, false, tea.BoolValue(ok))
 }
 
+func Test_GetTimestamp(t *testing.T) {
+	stamp := GetTimestamp()
+	utils.AssertEqual(t, 13, len(tea.StringValue(stamp)))
+}
+
 func Test_ToQuery(t *testing.T) {
 	res := ToQuery(map[string]interface{}{"test": "ok"})
 	utils.AssertEqual(t, tea.StringValue(res["test"]), "ok")
