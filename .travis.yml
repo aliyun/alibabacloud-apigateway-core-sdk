@@ -49,3 +49,16 @@ jobs:
         - dotnet test tests/ /p:AltCover=true
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF csharp
+    - language: python
+      python:
+        - "3.6"
+      env:
+        - PYTHONPATH=$PYTHONPATH:$TRAVIS_BUILD_DIR
+      install:
+        - pip install coverage
+        - pip install alibabacloud-tea
+      script:
+        - cd python
+        - coverage run --source=alibabacloud_apigateway_util -m pytest tests/test_*
+        - wget --no-check-certificate https://codecov.io/bash -O codecov.sh
+        - bash codecov.sh -cF "python"
