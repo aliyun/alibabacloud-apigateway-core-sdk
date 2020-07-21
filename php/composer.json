@@ -13,12 +13,12 @@
   },
   "autoload": {
     "psr-4": {
-      "AlibabaCloud\\ApiGateway\\SDK\\": "src"
+      "AlibabaCloud\\ApiGateway\\Util\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "AlibabaCloud\\ApiGateway\\SDK\\Tests\\": "tests"
+      "AlibabaCloud\\ApiGateway\\Util\\Tests\\": "tests"
     }
   },
   "scripts": {
