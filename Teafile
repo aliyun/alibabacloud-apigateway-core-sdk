@@ -8,7 +8,8 @@
 		"csharp": "AlibabaCloud.APIGatewayUtil:0.0.1",
 		"java": "com.aliyun:api-gateway-baseclient:2.0.0",
 		"ts": "@alicloud/api-gateway-baseclient:1.4.1",
-		"php": "alibabacloud/apigateway-util:^0.1.0"
+		"php": "alibabacloud/apigateway-util:^0.1.0",
+		"python": "alibabacloud_apigateway_util:0.0.1"
 	},
 	"java": {
 		"package": "com.aliyun.api_gateway_baseclient"
@@ -28,5 +29,9 @@
 	"csharp": {
 		"namespace": "AlibabaCloud.APIGatewayUtil",
 		"className": "Common"
+	},
+	"python": {
+		"package": "alibabacloud_apigateway_util",
+		"clientName": "client"
 	}
 }
