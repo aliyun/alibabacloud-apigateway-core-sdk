@@ -6,22 +6,32 @@ use AlibabaCloud\Tea\Request;
 
 class BaseClient
 {
+    private static $filterKey = [
+        'x-ca-signature',
+        'x-ca-signature-headers',
+        'accept',
+        'content-md5',
+        'content-type',
+        'date',
+        'host',
+        'token',
+    ];
 
     /**
-     * @param Request $request
-     * @param string  $secret
+     * @param string $secret
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
-    public function getSignature(Request $request, $secret)
+    public static function getSignature(Request $request, $secret)
     {
         $signedHeader = self::_getSignedHeader($request);
         $url          = self::_buildUrl($request);
-        $date         = isset($request->headers["date"]) ? $request->headers["date"] : "";
-        $accept       = isset($request->headers["accept"]) ? $request->headers["accept"] : "";
-        $contentType  = isset($request->headers["content-type"]) ? $request->headers["content-type"] : "";
-        $contentMd5   = isset($request->headers["content-md5"]) ? $request->headers["content-md5"] : "";
+        $date         = isset($request->headers['date']) ? $request->headers['date'] : '';
+        $accept       = isset($request->headers['accept']) ? $request->headers['accept'] : '';
+        $contentType  = isset($request->headers['content-type']) ? $request->headers['content-type'] : '';
+        $contentMd5   = isset($request->headers['content-md5']) ? $request->headers['content-md5'] : '';
 
         $signStr = implode("\n", [
             strtoupper($request->method),
@@ -30,8 +40,9 @@ class BaseClient
             $contentType,
             $date,
             $signedHeader,
-            $url
+            $url,
         ]);
+        var_dump($signStr);
 
         return base64_encode(hash_hmac('sha256', $signStr, $secret, true));
     }
@@ -39,10 +50,11 @@ class BaseClient
     /**
      * @param array $query
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
-    public function toQuery($query)
+    public static function toQuery($query)
     {
         $res = [];
         foreach ($query as $key => $val) {
@@ -50,16 +62,18 @@ class BaseClient
                 $res[$key] = $val;
             }
         }
+
         return $res;
     }
 
     /**
-     * @param integer $code
+     * @param int $code
+     *
+     * @throws \Exception
      *
      * @return bool
-     * @throws \Exception
      */
-    public function isFail($code)
+    public static function isFail($code)
     {
         return $code < 200 || $code >= 300;
     }
@@ -67,24 +81,14 @@ class BaseClient
     /**
      * @param string $body
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
-    public function getContentMD5($body)
+    public static function getContentMD5($body)
     {
         return base64_encode(md5($body, true));
     }
-
-    private static $filterKey = [
-        "x-ca-signature",
-        "x-ca-signature-headers",
-        "accept",
-        "content-md5",
-        "content-type",
-        "date",
-        "host",
-        "token"
-    ];
 
     /**
      * @param Request $request
@@ -93,18 +97,21 @@ class BaseClient
      */
     private static function _getSignedHeader($request)
     {
-        $headers    = $request->headers;
-        $keys       = [];
+        $headers = [];
+        foreach ($request->headers as $key => $header) {
+            $headers[strtolower($key)] = $header;
+        }
         $resHeaders = [];
+        ksort($headers);
+        $keys = [];
         foreach ($headers as $key => $val) {
-            $key = strtolower($key);
-            if (!in_array($key, self::$filterKey)) {
+            if (!\in_array($key, self::$filterKey)) {
                 array_push($keys, $key);
-                array_push($resHeaders, $key . ":" . $val);
+                array_push($resHeaders, $key . ':' . $val);
             }
         }
-        sort($keys);
-        $request->headers["x-ca-signature-headers"] = implode(',', $keys);
+        $request->headers['x-ca-signature-headers'] = implode(',', $keys);
+
         return implode("\n", $resHeaders);
     }
 
@@ -115,10 +122,10 @@ class BaseClient
      */
     private static function _buildUrl($request)
     {
-        $url   = $request->pathname ? $request->pathname : "";
+        $url   = $request->pathname ? $request->pathname : '';
         $query = $request->query;
         ksort($query);
-        if (count($query) > 0) {
+        if (\count($query) > 0) {
             if (false === strpos($url, '?')) {
                 $url .= '?';
             }
