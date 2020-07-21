@@ -1,6 +1,6 @@
 <?php
 
-namespace AlibabaCloud\ApiGateway\SDK;
+namespace AlibabaCloud\ApiGateway\Util;
 
 use AlibabaCloud\Tea\Request;
 

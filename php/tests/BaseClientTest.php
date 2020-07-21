@@ -1,8 +1,8 @@
 <?php
 
-namespace AlibabaCloud\ApiGateway\SDK\Tests;
+namespace AlibabaCloud\ApiGateway\Util\Tests;
 
-use AlibabaCloud\ApiGateway\SDK\BaseClient;
+use AlibabaCloud\ApiGateway\Util\BaseClient;
 use AlibabaCloud\Tea\Request;
 use PHPUnit\Framework\TestCase;
 
