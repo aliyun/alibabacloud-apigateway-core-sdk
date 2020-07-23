@@ -42,7 +42,6 @@ class BaseClient
             $signedHeader,
             $url,
         ]);
-        var_dump($signStr);
 
         return base64_encode(hash_hmac('sha256', $signStr, $secret, true));
     }
