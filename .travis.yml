@@ -20,6 +20,39 @@ jobs:
         - go test -race -coverprofile=coverage.txt -covermode=atomic ./service/... ./utils...
       after_success:
         - bash <(curl -s https://codecov.io/bash) -cF go
+    - language: go
+      go: 1.13.x
+      install:
+        - export GO111MODULE=on 
+      if: branch = master
+      script:
+        - cd golang
+        - go mod tidy
+        - go test -race -coverprofile=coverage.txt -covermode=atomic ./service/... ./utils...
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -cF go  
+    - language: go
+      go: 1.14.x
+      install:
+        - export GO111MODULE=on 
+      if: branch = master
+      script:
+        - cd golang
+        - go mod tidy
+        - go test -race -coverprofile=coverage.txt -covermode=atomic ./service/... ./utils...
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -cF go
+    - language: go
+      go: 1.15.x
+      install:
+        - export GO111MODULE=on 
+      if: branch = master
+      script:
+        - cd golang
+        - go mod tidy
+        - go test -race -coverprofile=coverage.txt -covermode=atomic ./service/... ./utils...
+      after_success:
+        - bash <(curl -s https://codecov.io/bash) -cF go         
     - language: java
       jdk: openjdk8
       if: branch = master
