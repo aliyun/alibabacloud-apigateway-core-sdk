@@ -20,6 +20,14 @@ func Test_GetSignature(t *testing.T) {
 	utils.AssertEqual(t, "h3zZzWDRJ+OiWSlhFl1YKhOvk5hOfxxOVIeH9kV86vw=", tea.StringValue(sign))
 }
 
+func Test_GetSignatureV1(t *testing.T) {
+	req := tea.NewRequest()
+	req.Query["sdk"] = tea.String("apigateway")
+	req.Headers["baseclient"] = tea.String("go")
+	sign := GetSignatureV1(req, req.Query, tea.String(""))
+	utils.AssertEqual(t, "h3zZzWDRJ+OiWSlhFl1YKhOvk5hOfxxOVIeH9kV86vw=", tea.StringValue(sign))
+}
+
 func Test_IsFail(t *testing.T) {
 	ok := IsFail(tea.Int(300))
 	utils.AssertEqual(t, true, tea.BoolValue(ok))

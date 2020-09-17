@@ -1,13 +1,13 @@
 {
 	"scope": "alibabacloud",
 	"name": "APIGatewayUtil",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"main": "./main.tea",
 	"releases": {
-		"go": "github.com/alibabacloud-go/apigateway-util/service:v1.1.1",
+		"go": "github.com/alibabacloud-go/apigateway-util/service:v1.1.2",
 		"csharp": "AlibabaCloud.APIGatewayUtil:0.0.1",
 		"java": "com.aliyun:api-gateway-baseclient:2.0.0",
-		"ts": "@alicloud/api-gateway-baseclient:1.4.1",
+		"ts": "@alicloud/api-gateway-baseclient:1.5.1",
 		"php": "alibabacloud/apigateway-util:^0.1.0",
 		"python": "alibabacloud_apigateway_util:0.0.1"
 	},

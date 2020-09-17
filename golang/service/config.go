@@ -112,9 +112,9 @@ func handleMap(valueField reflect.Value, result map[string]*string, prefix strin
 	}
 }
 
-func getSignature(appSecret string, req *tea.Request) string {
+func getSignature(appSecret string, signedParams map[string]*string, req *tea.Request) string {
 	signedHeader := getSignedHeader(req)
-	url := buildUrl(req)
+	url := buildUrl(req.Pathname, signedParams)
 	date := tea.StringValue(req.Headers["date"])
 	accept := tea.StringValue(req.Headers["accept"])
 	contentType := tea.StringValue(req.Headers["content-type"])
@@ -150,9 +150,9 @@ func isFilterKey(key string) bool {
 	return false
 }
 
-func buildUrl(request *tea.Request) string {
-	url := tea.StringValue(request.Pathname)
-	hs := newSorter(request.Query)
+func buildUrl(pataName *string, signedParams map[string]*string) string {
+	url := tea.StringValue(pataName)
+	hs := newSorter(signedParams)
 	hs.Sort()
 	if len(hs.Keys) > 0 {
 		url += "?"
