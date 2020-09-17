@@ -40,3 +40,13 @@ static function getContentMD5(body: string): string;
  * @example 1525872629832
  */
 static function getTimestamp(): string;
+
+/**
+ * Get signature V1 according to request and secret
+ * @param request  an obejct of $Request
+ * @param signedParams signed params
+ * @param secret AccessKeySecret
+ * @return the signature
+ * @example h3zZzWDRJ+OiWSlhFl1YKhOvk5hOfxxOVIeH9kV86vw=
+ */
+static function getSignatureV1(request: $Request, signedParams: map[string]string, secret: string): string;

@@ -1,11 +1,11 @@
 'use strict';
 
-import client from "../src/client";
 import * as $tea from "@alicloud/tea-typescript";
+import assert from 'assert';
 import { createServer, Server } from 'http';
 import { request } from 'httpx';
 import 'mocha';
-import assert from 'assert';
+import client from "../src/client";
 
 describe('base client', function () {
   let server: Server;
@@ -70,6 +70,25 @@ describe('base client', function () {
     req.headers['content-md5'] = undefined;
     req.headers['content-type'] = undefined;
     assert.ok(client.getSignature(req, 'appSecret'));
+
+  });
+
+  it('getSignatureV1 should ok', async function () {
+    assert.ok(client.getSignatureV1(req, {}, 'appSecret'));
+    req.pathname = '/api/openapi/v1/data/component/edit?novalue&test=test';
+    req.query = {
+      test: 'test',
+      novalue: undefined
+    };
+    assert.ok(client.getSignatureV1(req, req.query, 'appSecret'));
+    req.headers['accept'] = '*/*';
+    req.headers['content-md5'] = 'Q2hlY2sgSW50ZWdyaXR5IQ==';
+    req.headers['content-type'] = 'application/json;charset=UTF-8';
+    assert.ok(client.getSignatureV1(req, req.query, 'appSecret'));
+    req.headers['accept'] = undefined;
+    req.headers['content-md5'] = undefined;
+    req.headers['content-type'] = undefined;
+    assert.ok(client.getSignatureV1(req, req.query, 'appSecret'));
 
   });
 

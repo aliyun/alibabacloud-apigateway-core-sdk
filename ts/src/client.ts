@@ -1,6 +1,6 @@
 // This file is auto-generated, don't edit it
 import * as $tea from '@alicloud/tea-typescript';
-import { createHmac, createHash } from 'crypto';
+import { createHash, createHmac } from 'crypto';
 
 const filterKey = ['x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', 'token', 'reflect']
 
@@ -23,9 +23,9 @@ function _getSignedHeader(request: $tea.Request): string {
   return signedHeader.slice(0, -1);
 }
 
-function _buildUrl(request: $tea.Request): string {
-  let url = request.pathname;
-  let queryKeys = Object.keys(request.query);
+function _buildUrl(pathname: string, signedParams: { [key: string]: string }): string {
+  let url = pathname;
+  let queryKeys = Object.keys(signedParams);
   queryKeys.sort();
   if (queryKeys.length > 0) {
     url += '?';
@@ -34,10 +34,10 @@ function _buildUrl(request: $tea.Request): string {
     if (!url.endsWith('?')) {
       url += '&';
     }
-    if (typeof request.query[key] === 'undefined') {
+    if (typeof signedParams[key] === 'undefined') {
       url += encodeURIComponent(key);
     } else {
-      url += `${encodeURIComponent(key)}=${encodeURIComponent(request.query[key])}`;
+      url += `${encodeURIComponent(key)}=${encodeURIComponent(signedParams[key])}`;
     }
   });
   return url;
@@ -55,7 +55,21 @@ export default class Client {
 
   static getSignature(request: $tea.Request, secret: string): string {
     const signedHeader = _getSignedHeader(request);
-    const url = _buildUrl(request);
+    const url = _buildUrl(request.pathname, request.query);
+    const hmac = createHmac('sha256', secret);
+    hmac.update(request.method + '\n');
+    hmac.update((request.headers['accept'] || '') + '\n');
+    hmac.update((request.headers['content-md5'] || '') + '\n');
+    hmac.update((request.headers['content-type'] || '') + '\n');
+    hmac.update((request.headers['date'] || '') + '\n');
+    hmac.update((signedHeader || '') + '\n');
+    hmac.update(url || '');
+    return hmac.digest('base64');
+  }
+
+  static getSignatureV1(request: $tea.Request, signedParams: { [key: string]: string }, secret: string): string {
+    const signedHeader = _getSignedHeader(request);
+    const url = _buildUrl(request.pathname, signedParams);
     const hmac = createHmac('sha256', secret);
     hmac.update(request.method + '\n');
     hmac.update((request.headers['accept'] || '') + '\n');

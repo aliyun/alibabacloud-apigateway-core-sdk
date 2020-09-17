@@ -17,7 +17,11 @@ func GetContentMD5(body *string) *string {
 }
 
 func GetSignature(request *tea.Request, secret *string) *string {
-	return tea.String(getSignature(tea.StringValue(secret), request))
+	return tea.String(getSignature(tea.StringValue(secret), request.Query, request))
+}
+
+func GetSignatureV1(request *tea.Request, signedParams map[string]*string, secret *string) *string {
+	return tea.String(getSignature(tea.StringValue(secret), signedParams, request))
 }
 
 func IsFail(code *int) *bool {
