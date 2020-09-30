@@ -1,5 +1,5 @@
 // This file is auto-generated, don't edit it. Thanks.
-package com.aliyun.api_gateway_baseclient;
+package com.aliyun.apigateway.util;
 
 import com.aliyun.tea.*;
 import com.aliyun.tea.utils.StringUtils;
@@ -13,7 +13,7 @@ import java.util.*;
 public class Client {
 
     private static final String[] moveList = new String[]{
-            "x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "date", "host", "token"};
+            "x-ca-signature", "x-ca-signature-headers", "user-agent", "accept", "content-md5", "content-type", "date", "host", "token"};
 
     public static String getSignature(TeaRequest request, String secret) throws Exception {
         String httpMethod = request.method;
