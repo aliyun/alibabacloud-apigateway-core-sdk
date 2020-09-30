@@ -4,7 +4,15 @@ import base64
 import hmac
 
 MOVE_HEADERS = (
-    "x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "date", "host", "token"
+    "x-ca-signature",
+    "x-ca-signature-headers",
+    "accept",
+    "content-md5",
+    "content-type",
+    "date",
+    "host",
+    "token",
+    "user-agent"
 )
 
 
