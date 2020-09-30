@@ -9,7 +9,7 @@
 		"java": "com.aliyun:api-gateway-baseclient:2.0.0",
 		"ts": "@alicloud/api-gateway-baseclient:1.5.2",
 		"php": "alibabacloud/apigateway-util:^0.1.0",
-		"python": "alibabacloud_apigateway_util:0.0.1"
+		"python": "alibabacloud_apigateway_util:0.0.2"
 	},
 	"java": {
 		"package": "com.aliyun.api_gateway_baseclient"
