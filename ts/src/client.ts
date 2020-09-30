@@ -2,7 +2,7 @@
 import * as $tea from '@alicloud/tea-typescript';
 import { createHash, createHmac } from 'crypto';
 
-const filterKey = ['x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', 'token', 'reflect']
+const filterKey = ['x-ca-signature', 'x-ca-signature-headers', 'accept', 'content-md5', 'content-type', 'date', 'host', "user-agent", 'token', 'reflect']
 
 
 function _getSignedHeader(request: $tea.Request): string {
