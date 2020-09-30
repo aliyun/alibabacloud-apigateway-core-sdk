@@ -15,6 +15,7 @@ class BaseClient
         'date',
         'host',
         'token',
+        'user-agent',
     ];
 
     /**
