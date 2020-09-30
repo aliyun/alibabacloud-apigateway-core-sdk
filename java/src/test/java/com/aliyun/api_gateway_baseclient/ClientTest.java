@@ -1,5 +1,6 @@
 package com.aliyun.api_gateway_baseclient;
 
+import com.aliyun.apigateway.util.Client;
 import com.aliyun.tea.TeaRequest;
 import org.junit.Assert;
 import org.junit.Test;

@@ -12,7 +12,7 @@
 		"python": "alibabacloud_apigateway_util:0.0.2"
 	},
 	"java": {
-		"package": "com.aliyun.api_gateway_baseclient"
+		"package": "com.aliyun.apigateway.util"
 	},
 	"php": {
 		"package": "AlibabaCloud.ApiGateway.Util",
