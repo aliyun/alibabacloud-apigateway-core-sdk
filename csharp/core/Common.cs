@@ -11,7 +11,7 @@ namespace AlibabaCloud.APIGatewayUtil
 {
     public class Common
     {
-        private static readonly string[] filterKey = { "x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "date", "host", "token" };
+        private static readonly string[] filterKey = { "x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "user-agent", "date", "host", "token" };
 
         public static string GetSignature(TeaRequest request, string secret)
         {
