@@ -17,7 +17,7 @@ import (
 	"github.com/alibabacloud-go/tea/tea"
 )
 
-var filterKey = []string{"x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "date", "host", "token"}
+var filterKey = []string{"x-ca-signature", "x-ca-signature-headers", "accept", "content-md5", "content-type", "user-agent", "date", "host", "token"}
 
 // Sorter defines the key-value structure for storing the sorted data in signHeader.
 type Sorter struct {
