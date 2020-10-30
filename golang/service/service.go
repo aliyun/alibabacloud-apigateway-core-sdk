@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/json"
@@ -31,7 +32,9 @@ func IsFail(code *int) *bool {
 func ToQuery(filter map[string]interface{}) map[string]*string {
 	tmp := make(map[string]interface{})
 	byt, _ := json.Marshal(filter)
-	_ = json.Unmarshal(byt, &tmp)
+	d := json.NewDecoder(bytes.NewReader(byt))
+	d.UseNumber()
+	_ = d.Decode(&tmp)
 
 	result := make(map[string]*string)
 	for key, value := range tmp {
