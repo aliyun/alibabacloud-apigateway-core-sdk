@@ -97,7 +97,9 @@ func handleMap(valueField reflect.Value, result map[string]*string, prefix strin
 			var byt []byte
 			byt, _ = json.Marshal(valueField.Interface())
 			cache := make(map[string]interface{})
-			_ = json.Unmarshal(byt, &cache)
+			d := json.NewDecoder(bytes.NewReader(byt))
+			d.UseNumber()
+			_ = d.Decode(&cache)
 			for key, value := range cache {
 				pre := ""
 				if prefix != "" {
