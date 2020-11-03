@@ -33,5 +33,13 @@
 	"python": {
 		"package": "alibabacloud_apigateway_util",
 		"clientName": "client"
-	}
+	},
+  "cpp": {
+    "packageInfo": {
+      "git": {
+        "scope": "alibabacloud-sdk-cpp",
+        "project": "apigateway-util"
+      }
+    }
+  }
 }
